@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PrinterRem – Convert & Merge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        .info {
+            margin-top: 20px;
+            color: green;
+        }
+
+        table {
+            margin-top: 30px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Upload & Convert DOCX / PPTX / XLSX to PDF</h1>
+
+    <form action="/convert-merge" method="post" enctype="multipart/form-data">
+        <input type="file" name="files" multiple required>
+        <button type="submit">Convert & Merge</button>
+    </form>
+
+    {% if time_taken %}
+    <div class="info">
+        <p><strong>Total Time Taken:</strong> {{ time_taken }} sec</p>
+        <a href="{{ download_url }}">Download Merged PDF</a>
+    </div>
+    {% endif %}
+
+    <h2>Previous Conversions</h2>
+    <table>
+        <tr>
+            <th>Timestamp</th>
+            <th>Filename</th>
+            <th>Type</th>
+            <th>Size (MB)</th>
+            <th>Conversion Time (sec)</th>
+        </tr>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log['Timestamp'] }}</td>
+            <td>{{ log['Filename'] }}</td>
+            <td>{{ log['Type'] }}</td>
+            <td>{{ log['Size_MB'] }}</td>
+            <td>{{ log['ConversionTime_sec'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+
+</html>
